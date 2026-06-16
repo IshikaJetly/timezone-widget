@@ -6,7 +6,6 @@
   <title>Timezone Checker</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #ffffff;
@@ -14,7 +13,6 @@
       padding: 24px;
       min-height: 100vh;
     }
-
     h2 {
       font-size: 18px;
       font-weight: 600;
@@ -24,137 +22,52 @@
       align-items: center;
       gap: 8px;
     }
-
-    .subtitle {
-      font-size: 13px;
-      color: #6b7280;
-      margin-bottom: 20px;
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    label {
-      font-size: 12px;
-      font-weight: 600;
-      color: #374151;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
+    .subtitle { font-size: 13px; color: #6b7280; margin-bottom: 20px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    label { font-size: 12px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.04em; }
     select {
-      width: 100%;
-      padding: 9px 12px;
-      font-size: 14px;
-      color: #1a1a1a;
-      background: #ffffff;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      appearance: none;
-      -webkit-appearance: none;
+      width: 100%; padding: 9px 12px; font-size: 14px; color: #1a1a1a;
+      background: #ffffff; border: 1px solid #d1d5db; border-radius: 8px;
+      appearance: none; -webkit-appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      cursor: pointer;
-      transition: border-color 0.15s;
+      background-repeat: no-repeat; background-position: right 12px center;
+      cursor: pointer; transition: border-color 0.15s;
     }
-
     select:hover { border-color: #9ca3af; }
     select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
     select:disabled { background-color: #f9fafb; color: #9ca3af; cursor: not-allowed; }
-
     button {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #ffffff;
-      background: #2563eb;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 20px; font-size: 14px; font-weight: 600;
+      color: #ffffff; background: #2563eb; border: none; border-radius: 8px;
+      cursor: pointer; transition: background 0.15s, transform 0.1s;
     }
-
     button:hover { background: #1d4ed8; }
     button:active { transform: scale(0.98); }
-
-    .error {
-      font-size: 13px;
-      color: #dc2626;
-      margin-top: 10px;
-      display: none;
-    }
-
+    .error { font-size: 13px; color: #dc2626; margin-top: 10px; display: none; }
     .result {
-      margin-top: 16px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 16px 20px;
-      display: none;
+      margin-top: 16px; background: #f8fafc; border: 1px solid #e2e8f0;
+      border-radius: 12px; padding: 16px 20px; display: none;
     }
-
     .result.visible { display: block; }
-
-    .result-label {
-      font-size: 12px;
-      color: #6b7280;
-      margin-bottom: 2px;
-    }
-
-    .result-city {
-      font-size: 15px;
-      font-weight: 600;
-      color: #1a1a1a;
-      margin-bottom: 12px;
-    }
-
+    .result-label { font-size: 12px; color: #6b7280; margin-bottom: 2px; }
+    .result-city { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 12px; }
     .tz-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #dbeafe;
-      color: #1e40af;
-      border-radius: 8px;
-      padding: 10px 18px;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #dbeafe; color: #1e40af; border-radius: 8px;
+      padding: 10px 18px; font-size: 22px; font-weight: 700;
     }
-
-    .tz-note {
-      font-size: 12px;
-      color: #6b7280;
-      margin-top: 10px;
-      line-height: 1.5;
-    }
-
-    @media (max-width: 400px) {
-      .row { grid-template-columns: 1fr; }
-    }
+    .tz-note { font-size: 12px; color: #6b7280; margin-top: 10px; line-height: 1.5; }
+    @media (max-width: 400px) { .row { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
-
   <h2>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
     Timezone Checker
   </h2>
   <p class="subtitle">Select a state and city to find the US time zone.</p>
-
   <div class="row">
     <div class="field">
       <label for="stateSelect">State</label>
@@ -169,75 +82,19 @@
       </select>
     </div>
   </div>
-
   <button onclick="checkTimezone()">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
     Check Timezone
   </button>
-
   <p class="error" id="tzError">Please select both a state and a city.</p>
-
   <div class="result" id="tzResult">
     <p class="result-label">Time zone for</p>
     <p class="result-city" id="resultCity"></p>
     <div class="tz-badge" id="resultBadge"></div>
     <p class="tz-note" id="resultNote"></p>
   </div>
-
   <script>
-    const tzData = {
-      "Alabama":        { tz: "CST",  cities: ["Birmingham","Montgomery","Huntsville","Mobile","Tuscaloosa"] },
-      "Alaska":         { tz: "AKST", cities: ["Anchorage","Fairbanks","Juneau","Sitka","Ketchikan"] },
-      "Arizona":        { tz: "MST",  cities: ["Phoenix","Tucson","Mesa","Chandler","Scottsdale","Flagstaff"] },
-      "Arkansas":       { tz: "CST",  cities: ["Little Rock","Fort Smith","Fayetteville","Springdale","Jonesboro"] },
-      "California":     { tz: "PST",  cities: ["Los Angeles","San Francisco","San Diego","Sacramento","San Jose","Fresno","Oakland","Long Beach"] },
-      "Colorado":       { tz: "MST",  cities: ["Denver","Colorado Springs","Aurora","Fort Collins","Lakewood","Boulder"] },
-      "Connecticut":    { tz: "EST",  cities: ["Bridgeport","New Haven","Hartford","Stamford","Waterbury"] },
-      "Delaware":       { tz: "EST",  cities: ["Wilmington","Dover","Newark","Middletown","Smyrna"] },
-      "Florida":        { tz: "EST",  cities: ["Jacksonville","Miami","Tampa","Orlando","St. Petersburg","Tallahassee","Fort Lauderdale","Hialeah"] },
-      "Georgia":        { tz: "EST",  cities: ["Atlanta","Columbus","Augusta","Savannah","Athens","Macon"] },
-      "Hawaii":         { tz: "HST",  cities: ["Honolulu","Pearl City","Hilo","Kailua","Waipahu"] },
-      "Idaho":          { tz: "MST",  cities: ["Boise","Nampa","Meridian","Idaho Falls","Pocatello","Twin Falls"] },
-      "Illinois":       { tz: "CST",  cities: ["Chicago","Aurora","Joliet","Naperville","Rockford","Springfield","Peoria"] },
-      "Indiana":        { tz: "EST",  cities: ["Indianapolis","Fort Wayne","Evansville","South Bend","Carmel","Bloomington"] },
-      "Iowa":           { tz: "CST",  cities: ["Des Moines","Cedar Rapids","Davenport","Sioux City","Iowa City","Waterloo"] },
-      "Kansas":         { tz: "CST",  cities: ["Wichita","Overland Park","Kansas City","Topeka","Olathe","Lawrence"] },
-      "Kentucky":       { tz: "EST",  cities: ["Louisville","Lexington","Bowling Green","Owensboro","Covington","Hopkinsville"] },
-      "Louisiana":      { tz: "CST",  cities: ["New Orleans","Baton Rouge","Shreveport","Metairie","Lafayette","Lake Charles"] },
-      "Maine":          { tz: "EST",  cities: ["Portland","Lewiston","Bangor","South Portland","Auburn"] },
-      "Maryland":       { tz: "EST",  cities: ["Baltimore","Columbia","Germantown","Silver Spring","Waldorf","Frederick"] },
-      "Massachusetts":  { tz: "EST",  cities: ["Boston","Worcester","Springfield","Lowell","Cambridge","New Bedford"] },
-      "Michigan":       { tz: "EST",  cities: ["Detroit","Grand Rapids","Warren","Sterling Heights","Lansing","Ann Arbor","Flint"] },
-      "Minnesota":      { tz: "CST",  cities: ["Minneapolis","Saint Paul","Rochester","Duluth","Bloomington","Brooklyn Park"] },
-      "Mississippi":    { tz: "CST",  cities: ["Jackson","Gulfport","Southaven","Hattiesburg","Biloxi","Meridian"] },
-      "Missouri":       { tz: "CST",  cities: ["Kansas City","St. Louis","Springfield","Columbia","Independence","Lee's Summit"] },
-      "Montana":        { tz: "MST",  cities: ["Billings","Missoula","Great Falls","Bozeman","Butte","Helena"] },
-      "Nebraska":       { tz: "CST",  cities: ["Omaha","Lincoln","Bellevue","Grand Island","Kearney","Fremont"] },
-      "Nevada":         { tz: "PST",  cities: ["Las Vegas","Henderson","Reno","North Las Vegas","Sparks","Carson City"] },
-      "New Hampshire":  { tz: "EST",  cities: ["Manchester","Nashua","Concord","Derry","Dover","Rochester"] },
-      "New Jersey":     { tz: "EST",  cities: ["Newark","Jersey City","Paterson","Elizabeth","Edison","Trenton","Camden"] },
-      "New Mexico":     { tz: "MST",  cities: ["Albuquerque","Las Cruces","Rio Rancho","Santa Fe","Roswell","Farmington"] },
-      "New York":       { tz: "EST",  cities: ["New York City","Buffalo","Rochester","Yonkers","Syracuse","Albany","Brooklyn","Queens"] },
-      "North Carolina": { tz: "EST",  cities: ["Charlotte","Raleigh","Greensboro","Durham","Winston-Salem","Fayetteville","Cary"] },
-      "North Dakota":   { tz: "CST",  cities: ["Fargo","Bismarck","Grand Forks","Minot","West Fargo","Mandan"] },
-      "Ohio":           { tz: "EST",  cities: ["Columbus","Cleveland","Cincinnati","Toledo","Akron","Dayton"] },
-      "Oklahoma":       { tz: "CST",  cities: ["Oklahoma City","Tulsa","Norman","Broken Arrow","Lawton","Edmond"] },
-      "Oregon":         { tz: "PST",  cities: ["Portland","Salem","Eugene","Gresham","Hillsboro","Beaverton","Bend"] },
-      "Pennsylvania":   { tz: "EST",  cities: ["Philadelphia","Pittsburgh","Allentown","Erie","Reading","Scranton"] },
-      "Rhode Island":   { tz: "EST",  cities: ["Providence","Cranston","Warwick","Pawtucket","East Providence","Woonsocket"] },
-      "South Carolina": { tz: "EST",  cities: ["Columbia","Charleston","North Charleston","Mount Pleasant","Rock Hill","Greenville"] },
-      "South Dakota":   { tz: "CST",  cities: ["Sioux Falls","Rapid City","Aberdeen","Brookings","Watertown","Mitchell"] },
-      "Tennessee":      { tz: "CST",  cities: ["Nashville","Memphis","Knoxville","Chattanooga","Clarksville","Murfreesboro"] },
-      "Texas":          { tz: "CST",  cities: ["Houston","San Antonio","Dallas","Austin","Fort Worth","El Paso","Arlington","Corpus Christi","Plano","Laredo"] },
-      "Utah":           { tz: "MST",  cities: ["Salt Lake City","West Valley City","Provo","West Jordan","Orem","Sandy","Ogden"] },
-      "Vermont":        { tz: "EST",  cities: ["Burlington","Essex","South Burlington","Colchester","Rutland","Bennington"] },
-      "Virginia":       { tz: "EST",  cities: ["Virginia Beach","Norfolk","Chesapeake","Richmond","Newport News","Alexandria","Hampton","Roanoke"] },
-      "Washington":     { tz: "PST",  cities: ["Seattle","Spokane","Tacoma","Vancouver","Bellevue","Kent","Everett","Renton"] },
-      "West Virginia":  { tz: "EST",  cities: ["Charleston","Huntington","Parkersburg","Morgantown","Wheeling","Weirton"] },
-      "Wisconsin":      { tz: "CST",  cities: ["Milwaukee","Madison","Green Bay","Kenosha","Racine","Appleton"] },
-      "Wyoming":        { tz: "MST",  cities: ["Cheyenne","Casper","Laramie","Gillette","Rock Springs","Sheridan"] }
-    };
-
+const tzData = {"Alabama": {"tz": "CST", "cities": ["Alabaster", "Albertville", "Alexander City", "Anniston", "Arab", "Athens", "Atmore", "Auburn", "Bay Minette", "Bessemer", "Birmingham", "Boaz", "Calera", "Center Point", "Clanton", "Clay", "Cullman", "Daphne", "Decatur", "Dothan", "Enterprise", "Eufaula", "Fairfield", "Fairhope", "Florence", "Foley", "Fort Payne", "Gadsden", "Gardendale", "Gulf Shores", "Hartselle", "Helena", "Homewood", "Hoover", "Hueytown", "Huntsville", "Irondale", "Jacksonville", "Jasper", "Leeds", "Lincoln", "Madison", "McCalla", "Millbrook", "Mobile", "Moody", "Montgomery", "Muscle Shoals", "Northport", "Opelika", "Oxford", "Ozark", "Pelham", "Pell City", "Phenix City", "Prattville", "Prichard", "Rainsville", "Russellville", "Saraland", "Scottsboro", "Selma", "Sheffield", "Sylacauga", "Talladega", "Tillmans Corner", "Troy", "Trussville", "Tuscaloosa", "Tuscumbia", "Tuskegee", "Valley", "Vestavia Hills"]}, "Alaska": {"tz": "AKST", "cities": ["Anchorage", "Badger", "College", "Fairbanks", "Juneau", "Kenai", "Ketchikan", "Kodiak", "Lakes", "Palmer", "Sitka", "Soldotna", "Wasilla"]}, "Arizona": {"tz": "MST", "cities": ["Apache Junction", "Avondale", "Buckeye", "Bullhead City", "Casa Grande", "Casas Adobes", "Catalina Foothills", "Chandler", "Coolidge", "Cottonwood", "Douglas", "El Mirage", "Eloy", "Flagstaff", "Florence", "Fountain Hills", "Gilbert", "Glendale", "Goodyear", "Kingman", "Lake Havasu City", "Laveen", "Marana", "Maricopa", "Mesa", "Nogales", "Oro Valley", "Paradise Valley", "Peoria", "Phoenix", "Prescott", "Prescott Valley", "Queen Creek", "Sahuarita", "San Luis", "Scottsdale", "Sierra Vista", "Somerton", "Sun City", "Sun City West", "Sun Lakes", "Surprise", "Tempe", "Tolleson", "Tucson", "Yuma"]}, "Arkansas": {"tz": "CST", "cities": ["Arkadelphia", "Batesville", "Bella Vista", "Benton", "Bentonville", "Bryant", "Camden", "Cave Springs", "Conway", "El Dorado", "Fayetteville", "Forrest City", "Fort Smith", "Harrison", "Helena-West Helena", "Hope", "Hot Springs", "Jacksonville", "Jonesboro", "Little Rock", "Magnolia", "Malvern", "Marion", "Maumelle", "Mountain Home", "North Little Rock", "Osceola", "Paragould", "Pine Bluff", "Rogers", "Russellville", "Searcy", "Sherwood", "Springdale", "Stuttgart", "Texarkana", "Van Buren", "West Memphis"]}, "California": {"tz": "PST", "cities": ["Adelanto", "Agoura Hills", "Alameda", "Alhambra", "Aliso Viejo", "Altadena", "Anaheim", "Antioch", "Apple Valley", "Arcadia", "Arcata", "Atascadero", "Azusa", "Bakersfield", "Baldwin Park", "Banning", "Barstow", "Bell", "Bell Gardens", "Bellflower", "Berkeley", "Beverly Hills", "Brea", "Buena Park", "Burbank", "Calexico", "Camarillo", "Campbell", "Carson", "Cathedral City", "Cerritos", "Chico", "Chino", "Chino Hills", "Chula Vista", "Citrus Heights", "Clovis", "Coachella", "Compton", "Concord", "Corona", "Costa Mesa", "Culver City", "Daly City", "Davis", "Diamond Bar", "Downey", "East Los Angeles", "El Cajon", "El Centro", "El Monte", "Elk Grove", "Escondido", "Fairfield", "Folsom", "Fontana", "Fremont", "Fresno", "Fullerton", "Garden Grove", "Gardena", "Gilroy", "Glendale", "Glendora", "Hawthorne", "Hayward", "Hemet", "Hesperia", "Highland", "Huntington Beach", "Huntington Park", "Indio", "Inglewood", "Irvine", "La Habra", "La Mesa", "La Mirada", "La Puente", "Laguna Niguel", "Lake Elsinore", "Lake Forest", "Lakewood", "Lancaster", "Livermore", "Lodi", "Long Beach", "Los Angeles", "Lynwood", "Madera", "Manteca", "Menifee", "Merced", "Milpitas", "Mission Viejo", "Modesto", "Montebello", "Monterey Park", "Moreno Valley", "Morgan Hill", "Murrieta", "Napa", "National City", "Newport Beach", "Norwalk", "Oakland", "Oceanside", "Ontario", "Orange", "Oxnard", "Palmdale", "Palo Alto", "Pasadena", "Perris", "Petaluma", "Pico Rivera", "Pittsburg", "Placentia", "Pomona", "Rancho Cordova", "Rancho Cucamonga", "Rancho Santa Margarita", "Redding", "Redlands", "Redondo Beach", "Redwood City", "Rialto", "Richmond", "Riverside", "Rosemead", "Roseville", "Sacramento", "Salinas", "San Bernardino", "San Buenaventura", "San Diego", "San Francisco", "San Jose", "San Leandro", "San Marcos", "San Mateo", "Santa Ana", "Santa Barbara", "Santa Clara", "Santa Clarita", "Santa Maria", "Santa Monica", "Santa Rosa", "Simi Valley", "South Gate", "Stockton", "Suisun City", "Sunnyvale", "Temecula", "Thousand Oaks", "Torrance", "Tracy", "Turlock", "Tustin", "Union City", "Upland", "Vacaville", "Vallejo", "Victorville", "Visalia", "Vista", "Walnut Creek", "West Covina", "Westminster", "Whittier", "Woodland", "Yuba City"]}, "Colorado": {"tz": "MST", "cities": ["Arvada", "Aurora", "Boulder", "Brighton", "Broomfield", "Canon City", "Castle Rock", "Centennial", "Colorado Springs", "Commerce City", "Denver", "Durango", "Englewood", "Evans", "Fort Carson", "Fort Collins", "Fountain", "Grand Junction", "Greeley", "Highlands Ranch", "Ken Caryl", "Lafayette", "Lakewood", "Littleton", "Longmont", "Loveland", "Northglenn", "Parker", "Pueblo", "Security-Widefield", "Steamboat Springs", "Thornton", "Westminster", "Wheat Ridge"]}, "Connecticut": {"tz": "EST", "cities": ["Ansonia", "Branford", "Bridgeport", "Bristol", "Cheshire", "Danbury", "Derby", "East Hartford", "East Haven", "Enfield", "Fairfield", "Glastonbury", "Greenwich", "Groton", "Hamden", "Hartford", "Manchester", "Meriden", "Middletown", "Milford", "Naugatuck", "New Britain", "New Haven", "New London", "New Milford", "Newington", "Norwalk", "Norwich", "Shelton", "Simsbury", "Southington", "Stamford", "Stratford", "Torrington", "Trumbull", "Vernon", "Waterbury", "West Hartford", "West Haven", "Westport", "Wethersfield", "Windsor", "Windsor Locks", "Wolcott"]}, "Delaware": {"tz": "EST", "cities": ["Bear", "Claymont", "Dover", "Edgemoor", "Elsmere", "Georgetown", "Middletown", "Milford", "Newark", "Pike Creek", "Seaford", "Smyrna", "Wilmington", "Wilmington Manor"]}, "Florida": {"tz": "EST", "cities": ["Altamonte Springs", "Apopka", "Aventura", "Boca Raton", "Bonita Springs", "Boynton Beach", "Bradenton", "Brandon", "Cape Coral", "Casselberry", "Clearwater", "Clermont", "Coconut Creek", "Coral Gables", "Coral Springs", "Daytona Beach", "Deerfield Beach", "Delray Beach", "Deltona", "Doral", "Dunedin", "Fort Lauderdale", "Fort Myers", "Gainesville", "Greenacres", "Hialeah", "Hollywood", "Homestead", "Jacksonville", "Jupiter", "Kissimmee", "Lake Worth", "Lakeland", "Largo", "Lauderhill", "Margate", "Melbourne", "Miami", "Miami Beach", "Miami Gardens", "Miramar", "North Miami", "North Miami Beach", "Oakland Park", "Ocala", "Orlando", "Ormond Beach", "Palm Bay", "Palm Beach Gardens", "Pembroke Pines", "Pensacola", "Plant City", "Plantation", "Pompano Beach", "Port Orange", "Port St. Lucie", "Riviera Beach", "Sanford", "Sarasota", "Spring Hill", "St. Petersburg", "Sunrise", "Tallahassee", "Tamarac", "Tampa", "Titusville", "Wesley Chapel", "West Palm Beach", "Weston", "Winter Haven", "Winter Park"]}, "Georgia": {"tz": "EST", "cities": ["Acworth", "Albany", "Alpharetta", "Athens", "Atlanta", "Augusta", "Brookhaven", "Brunswick", "Canton", "Carrollton", "Columbus", "Conyers", "Covington", "Dalton", "Douglasville", "Dunwoody", "East Point", "Gainesville", "Griffin", "Johns Creek", "Kennesaw", "LaGrange", "Lawrenceville", "Macon", "Marietta", "McDonough", "Milton", "Newnan", "Peachtree City", "Peachtree Corners", "Rome", "Roswell", "Sandy Springs", "Savannah", "Smyrna", "South Fulton", "Statesboro", "Stockbridge", "Stonecrest", "Sugar Hill", "Valdosta", "Villa Rica", "Warner Robins", "Woodstock"]}, "Hawaii": {"tz": "HST", "cities": ["East Honolulu", "Ewa Beach", "Ewa Gentry", "Hilo", "Honolulu", "Kailua", "Kailua-Kona", "Kaneohe", "Mililani Town", "Pearl City", "Waipahu", "Waimalu"]}, "Idaho": {"tz": "MST", "cities": ["Ammon", "Blackfoot", "Boise", "Burley", "Caldwell", "Chubbuck", "Coeur d'Alene", "Eagle", "Idaho Falls", "Jerome", "Kuna", "Lewiston", "Meridian", "Moscow", "Mountain Home", "Nampa", "Pocatello", "Post Falls", "Rexburg", "Sandpoint", "Twin Falls"]}, "Illinois": {"tz": "CST", "cities": ["Addison", "Algonquin", "Arlington Heights", "Aurora", "Bartlett", "Belleville", "Berwyn", "Bloomington", "Bolingbrook", "Buffalo Grove", "Carol Stream", "Champaign", "Chicago", "Chicago Heights", "Cicero", "Crystal Lake", "Downers Grove", "East St. Louis", "Elgin", "Elk Grove Village", "Elmhurst", "Evanston", "Glendale Heights", "Gurnee", "Hanover Park", "Hoffman Estates", "Joliet", "Kankakee", "Lombard", "Moline", "Mount Prospect", "Naperville", "Normal", "Oak Lawn", "Oak Park", "O'Fallon", "Orland Park", "Oswego", "Palatine", "Pekin", "Peoria", "Plainfield", "Quincy", "Rockford", "Romeoville", "Round Lake Beach", "Schaumburg", "Skokie", "Springfield", "Streamwood", "Tinley Park", "Urbana", "Vernon Hills", "Waukegan", "Wheaton", "Wheeling"]}, "Indiana": {"tz": "EST", "cities": ["Anderson", "Avon", "Bloomington", "Brownsburg", "Carmel", "Columbus", "Connersville", "Elkhart", "Evansville", "Fishers", "Fort Wayne", "Franklin", "Gary", "Goshen", "Greenwood", "Hammond", "Indianapolis", "Jeffersonville", "Kokomo", "Lafayette", "Lawrence", "Michigan City", "Mishawaka", "Muncie", "Munster", "New Albany", "Noblesville", "Richmond", "South Bend", "Terre Haute", "Westfield", "Zionsville"]}, "Iowa": {"tz": "CST", "cities": ["Ames", "Ankeny", "Bettendorf", "Burlington", "Carroll", "Cedar Falls", "Cedar Rapids", "Clinton", "Council Bluffs", "Davenport", "Des Moines", "Dubuque", "Fort Dodge", "Iowa City", "Johnston", "Marshalltown", "Mason City", "Sioux City", "Urbandale", "Waterloo", "Waukee", "West Des Moines"]}, "Kansas": {"tz": "CST", "cities": ["Andover", "Arkansas City", "Dodge City", "Emporia", "Garden City", "Gardner", "Hays", "Hutchinson", "Junction City", "Kansas City", "Lawrence", "Lenexa", "Liberal", "Manhattan", "Newton", "Olathe", "Overland Park", "Pittsburg", "Prairie Village", "Salina", "Shawnee", "Topeka", "Wichita"]}, "Kentucky": {"tz": "EST", "cities": ["Ashland", "Bardstown", "Bowling Green", "Covington", "Elizabethtown", "Florence", "Frankfort", "Georgetown", "Henderson", "Hopkinsville", "Independence", "Jeffersontown", "Lexington", "Louisville", "Madisonville", "Murray", "Nicholasville", "Owensboro", "Paducah", "Richmond", "Shively", "Somerset"]}, "Louisiana": {"tz": "CST", "cities": ["Alexandria", "Baker", "Bastrop", "Baton Rouge", "Bossier City", "Central", "Covington", "Denham Springs", "Gretna", "Hammond", "Harvey", "Houma", "Kenner", "Lafayette", "Lake Charles", "Laplace", "Mandeville", "Marrero", "Metairie", "Monroe", "Morgan City", "Natchitoches", "New Iberia", "New Orleans", "Opelousas", "Ruston", "Shreveport", "Slidell", "Sulphur", "Terrytown", "Thibodaux", "Westwego"]}, "Maine": {"tz": "EST", "cities": ["Auburn", "Augusta", "Bangor", "Bath", "Biddeford", "Brunswick", "Gorham", "Lewiston", "Portland", "Saco", "Sanford", "South Portland", "Waterville", "Westbrook", "Windham", "Yarmouth"]}, "Maryland": {"tz": "EST", "cities": ["Annapolis", "Aspen Hill", "Baltimore", "Bethesda", "Bowie", "Cambridge", "Catonsville", "Columbia", "Cumberland", "Dundalk", "Easton", "Edgewood", "Eldersburg", "Ellicott City", "Essex", "Frederick", "Gaithersburg", "Germantown", "Glen Burnie", "Hagerstown", "Laurel", "Linthicum", "North Bethesda", "Odenton", "Olney", "Owings Mills", "Parkville", "Potomac", "Randallstown", "Rockville", "Salisbury", "Severn", "Silver Spring", "Towson", "Waldorf", "Westminster", "Wheaton"]}, "Massachusetts": {"tz": "EST", "cities": ["Agawam", "Andover", "Arlington", "Attleboro", "Beverly", "Boston", "Brockton", "Brookline", "Cambridge", "Chicopee", "Everett", "Fall River", "Fitchburg", "Framingham", "Gloucester", "Haverhill", "Holyoke", "Lawrence", "Leominster", "Lowell", "Malden", "Medford", "Methuen", "New Bedford", "Newton", "Northampton", "Peabody", "Pittsfield", "Plymouth", "Quincy", "Revere", "Salem", "Somerville", "Springfield", "Taunton", "Waltham", "Weymouth", "Worcester"]}, "Michigan": {"tz": "EST", "cities": ["Allen Park", "Ann Arbor", "Battle Creek", "Bay City", "Berkley", "Canton", "Clinton", "Dearborn", "Dearborn Heights", "Detroit", "East Lansing", "Eastpointe", "Farmington Hills", "Flint", "Grand Rapids", "Kalamazoo", "Kentwood", "Lansing", "Lincoln Park", "Livonia", "Macomb", "Midland", "Monroe", "Muskegon", "Norton Shores", "Novi", "Pontiac", "Port Huron", "Rochester Hills", "Roseville", "Royal Oak", "Saginaw", "St. Clair Shores", "Southfield", "Sterling Heights", "Taylor", "Troy", "Warren", "Westland", "Wyoming", "Ypsilanti"]}, "Minnesota": {"tz": "CST", "cities": ["Apple Valley", "Blaine", "Bloomington", "Brooklyn Center", "Brooklyn Park", "Burnsville", "Coon Rapids", "Cottage Grove", "Duluth", "Eagan", "Eden Prairie", "Edina", "Inver Grove Heights", "Lakeville", "Maple Grove", "Maplewood", "Minneapolis", "Minnetonka", "Moorhead", "Oakdale", "Plymouth", "Prior Lake", "Richfield", "Rochester", "Roseville", "Saint Cloud", "Saint Paul", "Shakopee", "Woodbury"]}, "Mississippi": {"tz": "CST", "cities": ["Bay St. Louis", "Biloxi", "Brandon", "Canton", "Clinton", "Columbus", "Corinth", "D'Iberville", "Flowood", "Gautier", "Gulfport", "Hattiesburg", "Horn Lake", "Jackson", "Long Beach", "Madison", "Meridian", "Moss Point", "Natchez", "Ocean Springs", "Olive Branch", "Oxford", "Pascagoula", "Pearl", "Ridgeland", "Southaven", "Starkville", "Tupelo", "Vicksburg"]}, "Missouri": {"tz": "CST", "cities": ["Ballwin", "Blue Springs", "Cape Girardeau", "Chesterfield", "Columbia", "Florissant", "Gladstone", "Grain Valley", "Hannibal", "Independence", "Jefferson City", "Joplin", "Kansas City", "Kirkwood", "Lee's Summit", "Liberty", "Maryland Heights", "O'Fallon", "Ozark", "Raymore", "Raytown", "St. Charles", "St. Joseph", "St. Louis", "St. Peters", "Springfield", "University City", "Wentzville", "Wildwood"]}, "Montana": {"tz": "MST", "cities": ["Belgrade", "Billings", "Bozeman", "Butte", "Great Falls", "Havre", "Helena", "Kalispell", "Missoula"]}, "Nebraska": {"tz": "CST", "cities": ["Beatrice", "Bellevue", "Columbus", "Fremont", "Grand Island", "Hastings", "Kearney", "La Vista", "Lincoln", "Norfolk", "North Platte", "Omaha", "Papillion", "Ralston", "Scottsbluff"]}, "Nevada": {"tz": "PST", "cities": ["Boulder City", "Carson City", "Elko", "Enterprise", "Henderson", "Las Vegas", "Laughlin", "Mesquite", "North Las Vegas", "Pahrump", "Paradise", "Reno", "Sparks", "Spring Valley", "Summerlin South", "Sunrise Manor", "Whitney", "Winchester"]}, "New Hampshire": {"tz": "EST", "cities": ["Bedford", "Concord", "Derry", "Dover", "Exeter", "Goffstown", "Hampton", "Hooksett", "Hudson", "Londonderry", "Manchester", "Merrimack", "Nashua", "Portsmouth", "Rochester", "Salem"]}, "New Jersey": {"tz": "EST", "cities": ["Bayonne", "Brick", "Camden", "Cherry Hill", "Clifton", "East Orange", "Edison", "Elizabeth", "Evesham", "Hamilton", "Hoboken", "Irvington", "Jersey City", "Lakewood", "Middletown", "Millville", "Newark", "Old Bridge", "Parsippany", "Passaic", "Paterson", "Perth Amboy", "Piscataway", "Plainfield", "Toms River", "Trenton", "Union", "Vineland", "Wayne", "Woodbridge"]}, "New Mexico": {"tz": "MST", "cities": ["Alamogordo", "Albuquerque", "Artesia", "Carlsbad", "Clovis", "Espanola", "Farmington", "Gallup", "Hobbs", "Las Cruces", "Las Vegas", "Los Lunas", "Portales", "Rio Rancho", "Roswell", "Ruidoso", "Santa Fe", "Shiprock", "Silver City", "Socorro", "Sunland Park", "Taos"]}, "New York": {"tz": "EST", "cities": ["Albany", "Amherst", "Babylon", "Brentwood", "Brighton", "Bronx", "Brookhaven", "Brooklyn", "Buffalo", "Cheektowaga", "Clarkstown", "Clay", "Colonie", "Greece", "Greenburgh", "Hempstead", "Huntington", "Irondequoit", "Islip", "Manhattan", "Mount Vernon", "New Rochelle", "New York City", "Niagara Falls", "Oyster Bay", "Queens", "Rochester", "Rome", "Schenectady", "Smithtown", "Southampton", "Staten Island", "Syracuse", "Tonawanda", "Troy", "Utica", "White Plains", "Yonkers"]}, "North Carolina": {"tz": "EST", "cities": ["Apex", "Asheville", "Burlington", "Cary", "Chapel Hill", "Charlotte", "Concord", "Durham", "Fayetteville", "Gastonia", "Greensboro", "Greenville", "Harrisburg", "Hickory", "High Point", "Holly Springs", "Huntersville", "Indian Trail", "Jacksonville", "Kannapolis", "Lenoir", "Matthews", "Monroe", "Mooresville", "Morrisville", "New Bern", "Raleigh", "Rocky Mount", "Salisbury", "Wake Forest", "Wilmington", "Wilson", "Winston-Salem"]}, "North Dakota": {"tz": "CST", "cities": ["Bismarck", "Dickinson", "Fargo", "Grand Forks", "Jamestown", "Mandan", "Minot", "Valley City", "Wahpeton", "West Fargo", "Williston"]}, "Ohio": {"tz": "EST", "cities": ["Akron", "Beavercreek", "Canton", "Cincinnati", "Cleveland", "Columbus", "Cuyahoga Falls", "Dayton", "Dublin", "Elyria", "Euclid", "Fairborn", "Fairfield", "Hamilton", "Kettering", "Lakewood", "Lancaster", "Lima", "Lorain", "Mansfield", "Mason", "Medina", "Mentor", "Middletown", "Newark", "Parma", "Reynoldsburg", "Springfield", "Strongsville", "Toledo", "Warren", "Westerville", "Youngstown"]}, "Oklahoma": {"tz": "CST", "cities": ["Ardmore", "Bartlesville", "Bethany", "Bixby", "Broken Arrow", "Claremore", "Del City", "Durant", "Edmond", "Enid", "Jenks", "Lawton", "McAlester", "Midwest City", "Moore", "Muskogee", "Norman", "Oklahoma City", "Owasso", "Ponca City", "Sapulpa", "Shawnee", "Stillwater", "Tulsa", "Yukon"]}, "Oregon": {"tz": "PST", "cities": ["Albany", "Aloha", "Beaverton", "Bend", "Bethany", "Corvallis", "Eugene", "Grants Pass", "Gresham", "Hillsboro", "Keizer", "Lake Oswego", "McMinnville", "Medford", "Oregon City", "Portland", "Redmond", "Salem", "Springfield", "Tigard", "Tualatin", "West Linn", "Woodburn"]}, "Pennsylvania": {"tz": "EST", "cities": ["Abington", "Allentown", "Altoona", "Bethlehem", "Bristol", "Chester", "Easton", "Erie", "Harrisburg", "Haverford", "Lancaster", "Levittown", "Lower Merion", "Monroeville", "Norristown", "Penn Hills", "Philadelphia", "Pittsburgh", "Reading", "Scranton", "State College", "Upper Darby", "Wilkes-Barre", "York"]}, "Rhode Island": {"tz": "EST", "cities": ["Barrington", "Bristol", "Coventry", "Cranston", "Cumberland", "East Greenwich", "East Providence", "Johnston", "Lincoln", "North Providence", "Pawtucket", "Portsmouth", "Providence", "Smithfield", "South Kingstown", "Warwick", "Westerly", "Woonsocket"]}, "South Carolina": {"tz": "EST", "cities": ["Aiken", "Anderson", "Bluffton", "Cayce", "Charleston", "Columbia", "Conway", "Florence", "Goose Creek", "Greenville", "Greenwood", "Hanahan", "Hilton Head Island", "Irmo", "Mount Pleasant", "Myrtle Beach", "North Augusta", "North Charleston", "North Myrtle Beach", "Rock Hill", "Spartanburg", "Summerville", "Sumter", "West Columbia"]}, "South Dakota": {"tz": "CST", "cities": ["Aberdeen", "Box Elder", "Brandon", "Brookings", "Harrisburg", "Huron", "Mitchell", "Pierre", "Rapid City", "Sioux Falls", "Spearfish", "Sturgis", "Vermillion", "Watertown", "Yankton"]}, "Tennessee": {"tz": "CST", "cities": ["Bartlett", "Brentwood", "Bristol", "Chattanooga", "Clarksville", "Cleveland", "Collierville", "Columbia", "Cookeville", "Franklin", "Gallatin", "Germantown", "Hendersonville", "Jackson", "Johnson City", "Kingsport", "Knoxville", "La Vergne", "Memphis", "Morristown", "Murfreesboro", "Nashville", "Smyrna", "Spring Hill"]}, "Texas": {"tz": "CST", "cities": ["Abilene", "Allen", "Amarillo", "Arlington", "Austin", "Baytown", "Beaumont", "Bedford", "Brownsville", "Bryan", "Burleson", "Carrollton", "Cedar Hill", "Cedar Park", "Cleburne", "College Station", "Conroe", "Coppell", "Corpus Christi", "Dallas", "Denton", "DeSoto", "Edinburg", "El Paso", "Euless", "Flower Mound", "Fort Worth", "Frisco", "Galveston", "Garland", "Georgetown", "Grand Prairie", "Grapevine", "Harlingen", "Houston", "Hurst", "Irving", "Killeen", "Kyle", "Laredo", "League City", "Leander", "Lewisville", "Longview", "Lubbock", "Lufkin", "Mansfield", "McAllen", "McKinney", "Mesquite", "Midland", "Mission", "Missouri City", "Nacogdoches", "New Braunfels", "North Richland Hills", "Odessa", "Pasadena", "Pearland", "Pflugerville", "Pharr", "Plano", "Port Arthur", "Richardson", "Rosenberg", "Round Rock", "Rowlett", "San Angelo", "San Antonio", "San Marcos", "Schertz", "Sherman", "Socorro", "Spring", "Sugar Land", "Temple", "Texarkana", "Texas City", "The Woodlands", "Tyler", "Victoria", "Waco", "Wichita Falls", "Wylie"]}, "Utah": {"tz": "MST", "cities": ["American Fork", "Bountiful", "Cedar City", "Clearfield", "Clinton", "Cottonwood Heights", "Draper", "Herriman", "Kaysville", "Layton", "Lehi", "Logan", "Midvale", "Murray", "Ogden", "Orem", "Pleasant Grove", "Provo", "Riverton", "Roy", "Salt Lake City", "Sandy", "South Jordan", "Spanish Fork", "Springville", "St. George", "Taylorsville", "Tooele", "West Jordan", "West Valley City"]}, "Vermont": {"tz": "EST", "cities": ["Barre", "Bennington", "Burlington", "Colchester", "Essex", "Essex Junction", "Middlebury", "Milton", "Montpelier", "Rutland", "South Burlington", "Springfield", "St. Albans", "Stowe", "Williston", "Winooski"]}, "Virginia": {"tz": "EST", "cities": ["Alexandria", "Arlington", "Blacksburg", "Bristol", "Burke", "Centreville", "Charlottesville", "Chesapeake", "Chester", "Chesterfield", "Dale City", "Danville", "Falls Church", "Fredericksburg", "Hampton", "Harrisonburg", "Lake Ridge", "Leesburg", "Linton Hall", "Lynchburg", "Manassas", "McLean", "Mechanicsville", "Newport News", "Norfolk", "Portsmouth", "Reston", "Richmond", "Roanoke", "Springfield", "Sterling", "Suffolk", "Tuckahoe", "Virginia Beach", "Woodbridge"]}, "Washington": {"tz": "PST", "cities": ["Auburn", "Bellevue", "Bellingham", "Bothell", "Bremerton", "Burien", "Edmonds", "Everett", "Federal Way", "Kennewick", "Kent", "Kirkland", "Lacey", "Lake Stevens", "Lakewood", "Longview", "Marysville", "Olympia", "Pasco", "Redmond", "Renton", "Richland", "Sammamish", "Seattle", "Shoreline", "Spokane", "Spokane Valley", "Tacoma", "Tukwila", "Vancouver", "Walla Walla", "Yakima"]}, "West Virginia": {"tz": "EST", "cities": ["Beckley", "Charleston", "Clarksburg", "Fairmont", "Huntington", "Martinsburg", "Morgantown", "Parkersburg", "Vienna", "Weirton", "Wheeling"]}, "Wisconsin": {"tz": "CST", "cities": ["Appleton", "Brookfield", "Eau Claire", "Franklin", "Green Bay", "Greenfield", "Janesville", "Kenosha", "La Crosse", "Madison", "Menomonee Falls", "Milwaukee", "Mount Pleasant", "Neenah", "New Berlin", "Oshkosh", "Racine", "Sheboygan", "Waukesha", "Wausau", "West Allis", "West Bend"]}, "Wyoming": {"tz": "MST", "cities": ["Casper", "Cheyenne", "Gillette", "Green River", "Laramie", "Rock Springs", "Sheridan"]}};
     const tzNotes = {
       "EST":  "Eastern Standard Time — UTC−5 (UTC−4 during daylight saving)",
       "PST":  "Pacific Standard Time — UTC−8 (UTC−7 during daylight saving)",
@@ -246,17 +103,13 @@
       "AKST": "Alaska Standard Time — UTC−9",
       "HST":  "Hawaii Standard Time — UTC−10 (no daylight saving)"
     };
-
     const stateSelect = document.getElementById('stateSelect');
     const citySelect  = document.getElementById('citySelect');
-
     Object.keys(tzData).sort().forEach(state => {
       const opt = document.createElement('option');
-      opt.value = state;
-      opt.textContent = state;
+      opt.value = state; opt.textContent = state;
       stateSelect.appendChild(opt);
     });
-
     function onStateChange() {
       const state = stateSelect.value;
       citySelect.innerHTML = '<option value="">— Select city —</option>';
@@ -264,14 +117,12 @@
       document.getElementById('tzError').style.display = 'none';
       if (!state) { citySelect.disabled = true; return; }
       citySelect.disabled = false;
-      tzData[state].cities.forEach(city => {
+      [...tzData[state].cities].sort().forEach(city => {
         const opt = document.createElement('option');
-        opt.value = city;
-        opt.textContent = city;
+        opt.value = city; opt.textContent = city;
         citySelect.appendChild(opt);
       });
     }
-
     function checkTimezone() {
       const state = stateSelect.value;
       const city  = citySelect.value;
@@ -285,6 +136,5 @@
       document.getElementById('tzResult').classList.add('visible');
     }
   </script>
-
 </body>
 </html>
