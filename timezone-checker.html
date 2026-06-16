@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timezone Checker</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      padding: 24px;
+      min-height: 100vh;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    select {
+      width: 100%;
+      padding: 9px 12px;
+      font-size: 14px;
+      color: #1a1a1a;
+      background: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    select:hover { border-color: #9ca3af; }
+    select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
+    select:disabled { background-color: #f9fafb; color: #9ca3af; cursor: not-allowed; }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      background: #2563eb;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    button:hover { background: #1d4ed8; }
+    button:active { transform: scale(0.98); }
+
+    .error {
+      font-size: 13px;
+      color: #dc2626;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .result {
+      margin-top: 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: none;
+    }
+
+    .result.visible { display: block; }
+
+    .result-label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 2px;
+    }
+
+    .result-city {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+
+    .tz-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #dbeafe;
+      color: #1e40af;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .tz-note {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 400px) {
+      .row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Timezone Checker
+  </h2>
+  <p class="subtitle">Select a state and city to find the US time zone.</p>
+
+  <div class="row">
+    <div class="field">
+      <label for="stateSelect">State</label>
+      <select id="stateSelect" onchange="onStateChange()">
+        <option value="">— Select state —</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="citySelect">City</label>
+      <select id="citySelect" disabled>
+        <option value="">— Select city —</option>
+      </select>
+    </div>
+  </div>
+
+  <button onclick="checkTimezone()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Check Timezone
+  </button>
+
+  <p class="error" id="tzError">Please select both a state and a city.</p>
+
+  <div class="result" id="tzResult">
+    <p class="result-label">Time zone for</p>
+    <p class="result-city" id="resultCity"></p>
+    <div class="tz-badge" id="resultBadge"></div>
+    <p class="tz-note" id="resultNote"></p>
+  </div>
+
+  <script>
+    const tzData = {
+      "Alabama":        { tz: "CST",  cities: ["Birmingham","Montgomery","Huntsville","Mobile","Tuscaloosa"] },
+      "Alaska":         { tz: "AKST", cities: ["Anchorage","Fairbanks","Juneau","Sitka","Ketchikan"] },
+      "Arizona":        { tz: "MST",  cities: ["Phoenix","Tucson","Mesa","Chandler","Scottsdale","Flagstaff"] },
+      "Arkansas":       { tz: "CST",  cities: ["Little Rock","Fort Smith","Fayetteville","Springdale","Jonesboro"] },
+      "California":     { tz: "PST",  cities: ["Los Angeles","San Francisco","San Diego","Sacramento","San Jose","Fresno","Oakland","Long Beach"] },
+      "Colorado":       { tz: "MST",  cities: ["Denver","Colorado Springs","Aurora","Fort Collins","Lakewood","Boulder"] },
+      "Connecticut":    { tz: "EST",  cities: ["Bridgeport","New Haven","Hartford","Stamford","Waterbury"] },
+      "Delaware":       { tz: "EST",  cities: ["Wilmington","Dover","Newark","Middletown","Smyrna"] },
+      "Florida":        { tz: "EST",  cities: ["Jacksonville","Miami","Tampa","Orlando","St. Petersburg","Tallahassee","Fort Lauderdale","Hialeah"] },
+      "Georgia":        { tz: "EST",  cities: ["Atlanta","Columbus","Augusta","Savannah","Athens","Macon"] },
+      "Hawaii":         { tz: "HST",  cities: ["Honolulu","Pearl City","Hilo","Kailua","Waipahu"] },
+      "Idaho":          { tz: "MST",  cities: ["Boise","Nampa","Meridian","Idaho Falls","Pocatello","Twin Falls"] },
+      "Illinois":       { tz: "CST",  cities: ["Chicago","Aurora","Joliet","Naperville","Rockford","Springfield","Peoria"] },
+      "Indiana":        { tz: "EST",  cities: ["Indianapolis","Fort Wayne","Evansville","South Bend","Carmel","Bloomington"] },
+      "Iowa":           { tz: "CST",  cities: ["Des Moines","Cedar Rapids","Davenport","Sioux City","Iowa City","Waterloo"] },
+      "Kansas":         { tz: "CST",  cities: ["Wichita","Overland Park","Kansas City","Topeka","Olathe","Lawrence"] },
+      "Kentucky":       { tz: "EST",  cities: ["Louisville","Lexington","Bowling Green","Owensboro","Covington","Hopkinsville"] },
+      "Louisiana":      { tz: "CST",  cities: ["New Orleans","Baton Rouge","Shreveport","Metairie","Lafayette","Lake Charles"] },
+      "Maine":          { tz: "EST",  cities: ["Portland","Lewiston","Bangor","South Portland","Auburn"] },
+      "Maryland":       { tz: "EST",  cities: ["Baltimore","Columbia","Germantown","Silver Spring","Waldorf","Frederick"] },
+      "Massachusetts":  { tz: "EST",  cities: ["Boston","Worcester","Springfield","Lowell","Cambridge","New Bedford"] },
+      "Michigan":       { tz: "EST",  cities: ["Detroit","Grand Rapids","Warren","Sterling Heights","Lansing","Ann Arbor","Flint"] },
+      "Minnesota":      { tz: "CST",  cities: ["Minneapolis","Saint Paul","Rochester","Duluth","Bloomington","Brooklyn Park"] },
+      "Mississippi":    { tz: "CST",  cities: ["Jackson","Gulfport","Southaven","Hattiesburg","Biloxi","Meridian"] },
+      "Missouri":       { tz: "CST",  cities: ["Kansas City","St. Louis","Springfield","Columbia","Independence","Lee's Summit"] },
+      "Montana":        { tz: "MST",  cities: ["Billings","Missoula","Great Falls","Bozeman","Butte","Helena"] },
+      "Nebraska":       { tz: "CST",  cities: ["Omaha","Lincoln","Bellevue","Grand Island","Kearney","Fremont"] },
+      "Nevada":         { tz: "PST",  cities: ["Las Vegas","Henderson","Reno","North Las Vegas","Sparks","Carson City"] },
+      "New Hampshire":  { tz: "EST",  cities: ["Manchester","Nashua","Concord","Derry","Dover","Rochester"] },
+      "New Jersey":     { tz: "EST",  cities: ["Newark","Jersey City","Paterson","Elizabeth","Edison","Trenton","Camden"] },
+      "New Mexico":     { tz: "MST",  cities: ["Albuquerque","Las Cruces","Rio Rancho","Santa Fe","Roswell","Farmington"] },
+      "New York":       { tz: "EST",  cities: ["New York City","Buffalo","Rochester","Yonkers","Syracuse","Albany","Brooklyn","Queens"] },
+      "North Carolina": { tz: "EST",  cities: ["Charlotte","Raleigh","Greensboro","Durham","Winston-Salem","Fayetteville","Cary"] },
+      "North Dakota":   { tz: "CST",  cities: ["Fargo","Bismarck","Grand Forks","Minot","West Fargo","Mandan"] },
+      "Ohio":           { tz: "EST",  cities: ["Columbus","Cleveland","Cincinnati","Toledo","Akron","Dayton"] },
+      "Oklahoma":       { tz: "CST",  cities: ["Oklahoma City","Tulsa","Norman","Broken Arrow","Lawton","Edmond"] },
+      "Oregon":         { tz: "PST",  cities: ["Portland","Salem","Eugene","Gresham","Hillsboro","Beaverton","Bend"] },
+      "Pennsylvania":   { tz: "EST",  cities: ["Philadelphia","Pittsburgh","Allentown","Erie","Reading","Scranton"] },
+      "Rhode Island":   { tz: "EST",  cities: ["Providence","Cranston","Warwick","Pawtucket","East Providence","Woonsocket"] },
+      "South Carolina": { tz: "EST",  cities: ["Columbia","Charleston","North Charleston","Mount Pleasant","Rock Hill","Greenville"] },
+      "South Dakota":   { tz: "CST",  cities: ["Sioux Falls","Rapid City","Aberdeen","Brookings","Watertown","Mitchell"] },
+      "Tennessee":      { tz: "CST",  cities: ["Nashville","Memphis","Knoxville","Chattanooga","Clarksville","Murfreesboro"] },
+      "Texas":          { tz: "CST",  cities: ["Houston","San Antonio","Dallas","Austin","Fort Worth","El Paso","Arlington","Corpus Christi","Plano","Laredo"] },
+      "Utah":           { tz: "MST",  cities: ["Salt Lake City","West Valley City","Provo","West Jordan","Orem","Sandy","Ogden"] },
+      "Vermont":        { tz: "EST",  cities: ["Burlington","Essex","South Burlington","Colchester","Rutland","Bennington"] },
+      "Virginia":       { tz: "EST",  cities: ["Virginia Beach","Norfolk","Chesapeake","Richmond","Newport News","Alexandria","Hampton","Roanoke"] },
+      "Washington":     { tz: "PST",  cities: ["Seattle","Spokane","Tacoma","Vancouver","Bellevue","Kent","Everett","Renton"] },
+      "West Virginia":  { tz: "EST",  cities: ["Charleston","Huntington","Parkersburg","Morgantown","Wheeling","Weirton"] },
+      "Wisconsin":      { tz: "CST",  cities: ["Milwaukee","Madison","Green Bay","Kenosha","Racine","Appleton"] },
+      "Wyoming":        { tz: "MST",  cities: ["Cheyenne","Casper","Laramie","Gillette","Rock Springs","Sheridan"] }
+    };
+
+    const tzNotes = {
+      "EST":  "Eastern Standard Time — UTC−5 (UTC−4 during daylight saving)",
+      "PST":  "Pacific Standard Time — UTC−8 (UTC−7 during daylight saving)",
+      "CST":  "Central Standard Time — UTC−6 (UTC−5 during daylight saving)",
+      "MST":  "Mountain Standard Time — UTC−7 (UTC−6 during daylight saving)",
+      "AKST": "Alaska Standard Time — UTC−9",
+      "HST":  "Hawaii Standard Time — UTC−10 (no daylight saving)"
+    };
+
+    const stateSelect = document.getElementById('stateSelect');
+    const citySelect  = document.getElementById('citySelect');
+
+    Object.keys(tzData).sort().forEach(state => {
+      const opt = document.createElement('option');
+      opt.value = state;
+      opt.textContent = state;
+      stateSelect.appendChild(opt);
+    });
+
+    function onStateChange() {
+      const state = stateSelect.value;
+      citySelect.innerHTML = '<option value="">— Select city —</option>';
+      document.getElementById('tzResult').classList.remove('visible');
+      document.getElementById('tzError').style.display = 'none';
+      if (!state) { citySelect.disabled = true; return; }
+      citySelect.disabled = false;
+      tzData[state].cities.forEach(city => {
+        const opt = document.createElement('option');
+        opt.value = city;
+        opt.textContent = city;
+        citySelect.appendChild(opt);
+      });
+    }
+
+    function checkTimezone() {
+      const state = stateSelect.value;
+      const city  = citySelect.value;
+      const errEl = document.getElementById('tzError');
+      errEl.style.display = 'none';
+      if (!state || !city) { errEl.style.display = 'block'; return; }
+      const tz = tzData[state].tz;
+      document.getElementById('resultCity').textContent  = city + ', ' + state;
+      document.getElementById('resultBadge').textContent = '🕐 ' + tz;
+      document.getElementById('resultNote').textContent  = tzNotes[tz] || '';
+      document.getElementById('tzResult').classList.add('visible');
+    }
+  </script>
+
+</body>
+</html>
